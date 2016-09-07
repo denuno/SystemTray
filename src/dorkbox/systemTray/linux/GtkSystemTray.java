@@ -54,6 +54,7 @@ class GtkSystemTray extends GtkTypeSystemTray {
             void run() {
                 final Pointer trayIcon_ = Gtk.gtk_status_icon_new();
                 Gtk.gtk_status_icon_set_name(trayIcon_, "SystemTray");
+                Gtk.gtk_status_icon_set_tooltip_text(trayIcon_, getTooltipText());
 
                 trayIcon = trayIcon_;
 

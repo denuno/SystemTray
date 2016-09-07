@@ -65,6 +65,7 @@ class TestTraySwt {
             throw new RuntimeException("Unable to load SystemTray!");
         }
 
+        this.systemTray.setTooltipText("A useful tooltip");
         this.systemTray.setIcon(LT_GRAY_MAIL);
 
         systemTray.setStatus("No Mail");

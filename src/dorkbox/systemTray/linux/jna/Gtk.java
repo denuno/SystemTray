@@ -17,6 +17,8 @@ package dorkbox.systemTray.linux.jna;
 
 import com.sun.jna.Function;
 import com.sun.jna.Pointer;
+import com.sun.jna.PointerType;
+
 import dorkbox.systemTray.SystemTray;
 
 import java.util.LinkedList;
@@ -285,7 +287,7 @@ class Gtk {
     public static native void gtk_status_icon_set_visible(Pointer widget, boolean visible);
 
     // app indicators don't support this, and we cater to the lowest common denominator
-//  public static native void gtk_status_icon_set_tooltip(Pointer widget, String tooltipText);
+  public static native void gtk_status_icon_set_tooltip_text(Pointer widget, String tooltipText);
 
     public static native void gtk_status_icon_set_title(Pointer widget, String titleText);
 
@@ -301,6 +303,8 @@ class Gtk {
 
     public static native void gtk_widget_set_sensitive(Pointer widget, int sensitive);
 
+    public static native void gtk_widget_set_tooltip_text(Pointer widget, String text);
+
     public static native void gtk_container_remove(Pointer menu, Pointer subItem);
 
     public static native void gtk_widget_show(Pointer widget);
@@ -308,5 +312,13 @@ class Gtk {
     public static native void gtk_widget_show_all(Pointer widget);
 
     public static native void gtk_widget_destroy(Pointer widget);
+
+    public static native Pointer gtk_widget_get_toplevel(Pointer w);
+    
+    public class GtkWidget extends PointerType {
+
+    }
+
+    
 }
 

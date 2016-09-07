@@ -1,0 +1,87 @@
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.dorkbox</groupId>
+  <artifactId>SystemTray</artifactId>
+  <version>2.21</version>
+  <packaging>jar</packaging>
+  <name>SystemTray</name>
+  <description>Cross-platform SystemTray and AppIndicator support for Java 6+</description>
+  <url>https://github.com/dorkbox/SystemTray</url>
+  <issueManagement>
+    <url>https://github.com/dorkbox/SystemTray/issues</url>
+    <system>GitHub Issues</system>
+  </issueManagement>
+  <licenses>
+    <license>
+      <comments>Dorkbox SystemTray</comments>
+      <name>Apache 2.0 License</name>
+      <url>http://opensource.org/licenses/Apache-2.0</url>
+    </license>
+    <license>
+      <comments>Dorkbox Utils</comments>
+      <name>Apache 2.0 License</name>
+      <url>http://opensource.org/licenses/Apache-2.0</url>
+    </license>
+    <license>
+      <comments>JNA</comments>
+      <name>Apache 2.0 License</name>
+      <url>http://opensource.org/licenses/Apache-2.0</url>
+    </license>
+    <license>
+      <comments>Lantern</comments>
+      <name>Apache 2.0 License</name>
+      <url>http://opensource.org/licenses/Apache-2.0</url>
+    </license>
+    <license>
+      <comments>SLF4J</comments>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Dorkbox</name>
+      <email>sonatype@dorkbox.com</email>
+      <organization>Dorkbox</organization>
+      <organizationUrl>https://github.com/dorkbox</organizationUrl>
+    </developer>
+  </developers>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>6</maven.compiler.source>
+    <maven.compiler.target>6</maven.compiler.target>
+  </properties>
+  <scm>
+    <connection>scm:git:git@github.com:dorkbox/SystemTray.git</connection>
+    <developerConnection>scm:git:git@github.com:dorkbox/SystemTray.git</developerConnection>
+    <url>git@github.com:dorkbox/SystemTray.git</url>
+  </scm>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <!--  tests in test dir are just for humans
+    <testSourceDirectory>test</testSourceDirectory>
+     -->
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>com.dorkbox</groupId>
+      <artifactId>SystemTray-Dorkbox-Util</artifactId>
+      <version>2.20</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.9</version>
+    </dependency>
+    <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna</artifactId>
+      <version>4.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.swt.gtk.linux</groupId>
+      <artifactId>x86_64</artifactId>
+      <version>3.3.0-v3346</version>
+    </dependency>
+  </dependencies>
+</project>

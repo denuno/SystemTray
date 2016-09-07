@@ -17,6 +17,7 @@
 package dorkbox.systemTray.linux;
 
 import com.sun.jna.Pointer;
+
 import dorkbox.systemTray.ImageUtil;
 import dorkbox.systemTray.SystemTray;
 import dorkbox.systemTray.SystemTrayMenuAction;
@@ -36,6 +37,7 @@ class GtkTypeSystemTray extends SystemTray {
 
     private volatile Pointer connectionStatusItem;
     private volatile String statusText = null;
+    private volatile String tooltipText = null;
 
     @Override
     protected
@@ -63,6 +65,17 @@ class GtkTypeSystemTray extends SystemTray {
         return statusText;
     }
 
+    @Override
+    public
+    void setTooltipText(final String tooltipText) {
+        this.tooltipText = tooltipText;
+    }
+
+    public
+    String getTooltipText() {
+        return this.tooltipText;
+    }
+    
     @Override
     public
     void setStatus(final String statusText) {

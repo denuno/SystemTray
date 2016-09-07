@@ -44,6 +44,7 @@ class TestTray {
 
     public
     TestTray() {
+        SystemTray.FORCE_LINUX_TYPE = SystemTray.LINUX_GTK;
         this.systemTray = SystemTray.getSystemTray();
         if (systemTray == null) {
             throw new RuntimeException("Unable to load SystemTray!");
@@ -51,6 +52,7 @@ class TestTray {
 
         this.systemTray.setIcon(LT_GRAY_MAIL);
         systemTray.setStatus("No Mail");
+        systemTray.setTooltipText("A useful tooltip");
 
         callbackGreen = new SystemTrayMenuAction() {
             @Override

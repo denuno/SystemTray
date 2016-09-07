@@ -16,6 +16,7 @@
 package dorkbox.systemTray.linux;
 
 import com.sun.jna.Pointer;
+
 import dorkbox.systemTray.SystemTray;
 import dorkbox.systemTray.linux.jna.AppIndicator;
 import dorkbox.systemTray.linux.jna.AppIndicatorInstanceStruct;

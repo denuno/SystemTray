@@ -186,5 +186,6 @@ class AppIndicator {
 
     public static native void app_indicator_set_status(AppIndicatorInstanceStruct self, int status);
     public static native void app_indicator_set_menu(AppIndicatorInstanceStruct self, Pointer menu);
+    public static native void app_indicator_set_label(AppIndicatorInstanceStruct self, String label, String desc);
     public static native void app_indicator_set_icon(AppIndicatorInstanceStruct self, String icon_name);
 }

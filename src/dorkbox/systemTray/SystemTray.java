@@ -24,6 +24,7 @@ import dorkbox.systemTray.swing.SwingSystemTray;
 import dorkbox.util.OS;
 import dorkbox.util.Property;
 import dorkbox.util.process.ShellProcessBuilder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -129,10 +130,11 @@ class SystemTray {
             // System.setProperty("SWT_GTK3", "0"); // Necessary for us to work with SWT
 
             // was SWT forced?
-            boolean isSwt_GTK3 = !System.getProperty("SWT_GTK3").equals("0");
+            boolean isSwt_GTK3 = System.getProperty("SWT_GTK3") != null && !System.getProperty("SWT_GTK3").equals("0");
             if (!isSwt_GTK3) {
                 // check a different property
-                isSwt_GTK3 = !System.getProperty("org.eclipse.swt.internal.gtk.version").startsWith("2.");
+                String gtkVersionProp = System.getProperty("org.eclipse.swt.internal.gtk.version");
+                isSwt_GTK3 = gtkVersionProp != null && !gtkVersionProp.startsWith("2.");
             }
 
             if (isSwt_GTK3) {
@@ -150,7 +152,7 @@ class SystemTray {
 
         if (OS.isWindows()) {
             // the tray icon size in windows is DIFFERENT than on Mac (TODO: test on mac with retina stuff).
-            TRAY_SIZE -= 4;
+//            TRAY_SIZE -= 4;
         }
 
         if (OS.isLinux()) {
@@ -562,6 +564,17 @@ class SystemTray {
     public abstract
     void setStatus(String statusText);
 
+    /**
+     * Sets a tooltip string.  Does not work for appindicator.
+     *
+     * @param tooltipText the tooltip text you want displayed, null if you want to remove the tooltip
+     */
+    public abstract
+    void setTooltipText(String tooltipText);
+    
+    public abstract
+    String getTooltipText();
+    
     protected abstract
     void setIcon_(String iconPath);
 
@@ -1115,5 +1128,6 @@ class SystemTray {
             throw new NullPointerException("No menu entry exists for string '" + menuText + "'");
         }
     }
+
 }
 

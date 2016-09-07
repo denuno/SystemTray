@@ -23,6 +23,7 @@ import dorkbox.util.SwingUtil;
 
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
+
 import java.awt.AWTException;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -45,6 +46,7 @@ class SwingSystemTray extends dorkbox.systemTray.SystemTray {
 
     volatile JMenuItem connectionStatusItem;
     private volatile String statusText = null;
+    private volatile String tooltipText = null;
 
     volatile SystemTray tray;
     volatile TrayIcon trayIcon;
@@ -134,6 +136,17 @@ class SwingSystemTray extends dorkbox.systemTray.SystemTray {
     }
 
     @Override
+    public
+    void setTooltipText(final String tooltipText) {
+        this.tooltipText = tooltipText;
+    }
+
+    public
+    String getTooltipText() {
+        return this.tooltipText;
+    }
+
+    @Override
     protected
     void setIcon_(final String iconPath) {
         dispatch(new Runnable() {
@@ -150,7 +163,7 @@ class SwingSystemTray extends dorkbox.systemTray.SystemTray {
                         Image trayImage = new ImageIcon(iconPath).getImage()
                                                                  .getScaledInstance(TRAY_SIZE, TRAY_SIZE, Image.SCALE_SMOOTH);
                         trayImage.flush();
-                        trayIcon = new TrayIcon(trayImage);
+                        trayIcon = new TrayIcon(trayImage, getTooltipText());
 
                         // appindicators don't support this, so we cater to the lowest common denominator
                         // trayIcon.setToolTip(SwingSystemTray.this.appName);
