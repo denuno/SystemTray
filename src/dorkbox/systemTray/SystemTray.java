@@ -70,6 +70,10 @@ class SystemTray {
     public static boolean FORCE_GTK2 = false;
 
     @Property
+    /** Forces the system tray to always choose SWT */
+    public static boolean FORCE_SWT = false;
+
+    @Property
     /** If != 0, forces the system tray in linux to be GTK (1) or AppIndicator (2). This is an advanced feature. */
     public static int FORCE_LINUX_TYPE = 0;
 
@@ -379,7 +383,7 @@ class SystemTray {
         }
 
         // this is windows OR mac
-        if (trayType == null && java.awt.SystemTray.isSupported()) {
+        if (trayType == null && java.awt.SystemTray.isSupported() || FORCE_SWT) {
             try {
                 java.awt.SystemTray.getSystemTray();
                 trayType = SwingSystemTray.class;

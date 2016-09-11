@@ -21,12 +21,13 @@ import dorkbox.systemTray.SystemTrayMenuAction;
 import dorkbox.util.ScreenUtil;
 import dorkbox.util.SwingUtil;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 import javax.swing.JMenuItem;
 
 import java.awt.AWTException;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -34,6 +35,9 @@ import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
@@ -160,8 +164,7 @@ class SwingSystemTray extends dorkbox.systemTray.SystemTray {
                         isActive = true;
 
                         menu = new SwingSystemTrayMenuPopup();
-                        Image trayImage = new ImageIcon(iconPath).getImage()
-                                                                 .getScaledInstance(TRAY_SIZE, TRAY_SIZE, Image.SCALE_SMOOTH);
+                        Image trayImage = getResizedImage(iconPath);
                         trayImage.flush();
                         trayIcon = new TrayIcon(trayImage, getTooltipText());
 
@@ -214,8 +217,7 @@ class SwingSystemTray extends dorkbox.systemTray.SystemTray {
                             logger.error("TrayIcon could not be added.", e);
                         }
                     } else {
-                        Image trayImage = new ImageIcon(iconPath).getImage()
-                                                                 .getScaledInstance(TRAY_SIZE, TRAY_SIZE, Image.SCALE_SMOOTH);
+                        Image trayImage = getResizedImage(iconPath);
                         trayImage.flush();
                         tray.trayIcon.setImage(trayImage);
                     }
@@ -298,5 +300,21 @@ class SwingSystemTray extends dorkbox.systemTray.SystemTray {
         else {
             addMenuEntry_(menuText, ImageUtil.iconPathNoCache(imageStream), callback);
         }
+    }
+    
+    // using this fixes weird getScaledImage() size variance on Windows
+    private BufferedImage getResizedImage(String imagePath) {
+        BufferedImage originalImage, resizedImage = null;
+        try {
+            originalImage = ImageIO.read(new File(imagePath));
+            int type = originalImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
+            resizedImage = new BufferedImage(TRAY_SIZE, TRAY_SIZE, type);
+            Graphics2D g = resizedImage.createGraphics();
+            g.drawImage(originalImage, 0, 0, TRAY_SIZE, TRAY_SIZE, null);
+            g.dispose();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resizedImage;
     }
 }
