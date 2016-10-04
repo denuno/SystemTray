@@ -45,6 +45,7 @@ class TestTray {
     public
     TestTray() {
         SystemTray.FORCE_LINUX_TYPE = SystemTray.LINUX_GTK;
+        SystemTray.FORCE_SWT = true;
         this.systemTray = SystemTray.getSystemTray();
         if (systemTray == null) {
             throw new RuntimeException("Unable to load SystemTray!");
