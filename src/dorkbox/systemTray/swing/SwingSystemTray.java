@@ -167,6 +167,7 @@ class SwingSystemTray extends dorkbox.systemTray.SystemTray {
                         Image trayImage = getResizedImage(iconPath);
                         trayImage.flush();
                         trayIcon = new TrayIcon(trayImage, getTooltipText());
+                        trayIcon.setImageAutoSize(true);
 
                         // appindicators don't support this, so we cater to the lowest common denominator
                         // trayIcon.setToolTip(SwingSystemTray.this.appName);
