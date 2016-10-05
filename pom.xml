@@ -82,6 +82,7 @@
       <groupId>org.eclipse.swt.gtk.linux</groupId>
       <artifactId>x86_64</artifactId>
       <version>3.3.0-v3346</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 </project>
