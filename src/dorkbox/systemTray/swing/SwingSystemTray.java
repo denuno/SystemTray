@@ -18,6 +18,7 @@ package dorkbox.systemTray.swing;
 import dorkbox.systemTray.ImageUtil;
 import dorkbox.systemTray.MenuEntry;
 import dorkbox.systemTray.SystemTrayMenuAction;
+import dorkbox.systemTray.SystemUtils;
 import dorkbox.util.ScreenUtil;
 import dorkbox.util.SwingUtil;
 
@@ -167,7 +168,6 @@ class SwingSystemTray extends dorkbox.systemTray.SystemTray {
                         Image trayImage = getResizedImage(iconPath);
                         trayImage.flush();
                         trayIcon = new TrayIcon(trayImage, getTooltipText());
-                        trayIcon.setImageAutoSize(true);
 
                         // appindicators don't support this, so we cater to the lowest common denominator
                         // trayIcon.setToolTip(SwingSystemTray.this.appName);
@@ -305,6 +305,9 @@ class SwingSystemTray extends dorkbox.systemTray.SystemTray {
     
     // using this fixes weird getScaledImage() size variance on Windows
     private BufferedImage getResizedImage(String imagePath) {
+        if(SystemUtils.IS_OS_WINDOWS && !SystemUtils.IS_OS_WINDOWS_10) {
+            TRAY_SIZE = 16;
+        }
         BufferedImage originalImage, resizedImage = null;
         try {
             originalImage = ImageIO.read(new File(imagePath));
