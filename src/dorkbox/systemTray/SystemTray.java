@@ -752,6 +752,45 @@ class SystemTray {
      * Updates (or changes) the menu entry's text.
      *
      * @param origMenuText the original menu text
+     * @param newMenuText the new menu text (this will replace the original menu text)
+     */
+    public final
+    void updateMenuEntry_Enabled(final String origMenuText, final boolean enabled) {
+        // have to wait for the value
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
+        final AtomicBoolean hasValue =  new AtomicBoolean(true);
+        
+        dispatch(new Runnable() {
+            @Override
+            public
+            void run() {
+                synchronized (menuEntries) {
+                    MenuEntry menuEntry = getMenuEntry(origMenuText);
+                    menuEntry.setEnabled(enabled);
+                }
+                countDownLatch.countDown();
+            }
+        });
+        
+        try {
+            if (!countDownLatch.await(TIMEOUT, TimeUnit.SECONDS)) {
+                throw new RuntimeException("Event dispatch queue took longer than " + TIMEOUT + " seconds to complete. Please adjust " +
+                        "`SystemTray.TIMEOUT` to a value which better suites your environment.");
+                
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        if (!hasValue.get()) {
+            throw new NullPointerException("No menu entry exists for string '" + origMenuText + "'");
+        }
+    }
+
+    /**
+     * Updates (or changes) the menu entry's text.
+     *
+     * @param origMenuText the original menu text
      * @param imagePath the new path for the image to use or null to delete the image
      */
     public final

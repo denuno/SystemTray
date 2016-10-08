@@ -42,6 +42,7 @@ class GtkMenuEntry implements MenuEntry, GCallback {
     private volatile String text;
     private volatile SystemTrayMenuAction callback;
     private volatile Pointer image;
+    private volatile boolean enabled;
 
     /**
      * called from inside dispatch thread. ONLY creates the menu item, but DOES NOT attach it!
@@ -93,6 +94,27 @@ class GtkMenuEntry implements MenuEntry, GCallback {
 
     @Override
     public
+    boolean getEnabled() {
+        return this.enabled;
+    }
+    
+    @Override
+    public
+    void setEnabled(final boolean enabled) {
+        Gtk.dispatch(new Runnable() {
+            @Override
+            public
+            void run() {
+                if(!enabled){
+                    callback = null;
+                }
+                Gtk.gtk_widget_show_all(menuItem);
+            }
+        });
+    }
+
+    @Override
+    public
     void setText(final String newText) {
         Gtk.dispatch(new Runnable() {
             @Override
@@ -100,12 +122,12 @@ class GtkMenuEntry implements MenuEntry, GCallback {
             void run() {
                 text = newText;
                 Gtk.gtk_menu_item_set_label(menuItem, newText);
-
+                
                 Gtk.gtk_widget_show_all(menuItem);
             }
         });
     }
-
+    
     private
     void setImage_(final String imagePath) {
         Gtk.dispatch(new Runnable() {

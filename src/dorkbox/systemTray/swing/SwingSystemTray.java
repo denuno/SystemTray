@@ -114,30 +114,6 @@ class SwingSystemTray extends dorkbox.systemTray.SystemTray {
     public
     void setStatus(final String statusText) {
         this.statusText = statusText;
-
-        dispatch(new Runnable() {
-            @Override
-            public
-            void run() {
-                SwingSystemTray tray = SwingSystemTray.this;
-                synchronized (tray) {
-                    if (tray.connectionStatusItem == null) {
-                        final JMenuItem connectionStatusItem = new JMenuItem(statusText);
-                        Font font = connectionStatusItem.getFont();
-                        Font font1 = font.deriveFont(Font.BOLD);
-                        connectionStatusItem.setFont(font1);
-
-                        connectionStatusItem.setEnabled(false);
-                        tray.menu.add(connectionStatusItem);
-
-                        tray.connectionStatusItem = connectionStatusItem;
-                    }
-                    else {
-                        tray.connectionStatusItem.setText(statusText);
-                    }
-                }
-            }
-        });
     }
 
     @Override

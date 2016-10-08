@@ -75,9 +75,18 @@ interface MenuEntry {
      * @param callback the callback to set. If null, the callback is safely removed.
      */
     void setCallback(SystemTrayMenuAction callback);
+    
+    /**
+     * Sets enablement for a menu entry.
+     *
+     * @param enabled true to enable
+     */
+    void setEnabled(boolean enabled);
+    boolean getEnabled();
 
     /**
      * Removes this menu entry from the menu and releases all system resources associated with this menu entry
      */
     void remove();
+
 }

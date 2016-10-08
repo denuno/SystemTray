@@ -27,7 +27,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.UIManager;
+
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -45,6 +47,7 @@ class SwingMenuEntry implements MenuEntry {
     private final SystemTray systemTray;
     private final JMenuItem menuItem;
     private final ActionListener swingCallback;
+    private final boolean enabled;
 
     private volatile String text;
     private volatile SystemTrayMenuAction callback;
@@ -60,6 +63,7 @@ class SwingMenuEntry implements MenuEntry {
         this.text = label;
         this.callback = callback;
         this.systemTray = systemTray;
+        this.enabled = true;
 
         swingCallback = new ActionListener() {
             @Override
@@ -90,10 +94,36 @@ class SwingMenuEntry implements MenuEntry {
 
     @Override
     public
+    boolean getEnabled() {
+        return enabled;
+    }
+    
+    @Override
+    public
+    void setEnabled(final boolean enabled) {
+        SwingUtil.invokeLater(new Runnable() {
+            @Override
+            public
+            void run() {
+                Font font = menuItem.getFont();
+                Font font1;
+                if(!enabled) {
+                    font1 = font.deriveFont(Font.BOLD);
+                } else {
+                    font1 = font.deriveFont(Font.PLAIN);
+                }
+                menuItem.setFont(font1);
+                menuItem.setEnabled(enabled);
+            }
+        });
+    }
+
+    @Override
+    public
     String getText() {
         return text;
     }
-
+    
     @Override
     public
     void setText(final String newText) {
